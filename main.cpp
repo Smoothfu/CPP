@@ -49,13 +49,8 @@ void multi_thread_demo(int x,int y,int z,string str)
 }
 
 int main(int args,char **argv)
-{
-    // print_time_demo();
-    // print_uuid_demo();
-    serialize_book_vector_demo(atoi(argv[1]));
-    // deserialize_json_string_to_vector_demo(argv[1]);
-    // invoke_func_argv_demo(atoi(argv[1]),atoi(argv[2]));
-    // multi_thread_demo(atoi(argv[1]),atoi(argv[2]),atoi(argv[3]),argv[4]);
+{ 
+    serialize_book_vector_demo(atoi(argv[1])); 
 }
 
 

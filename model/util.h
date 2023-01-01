@@ -5,7 +5,8 @@
 #include <ctime>
 #include <fstream>
 #include <iomanip>
-#include <iostream>
+#include <iostream> 
+#include <mysql/mysql.h>
 #include <random>
 #include <sstream>
 #include <string.h>
@@ -14,6 +15,13 @@
 #include <uuid/uuid.h>
 #include <vector>
 #include <jsoncpp/json/json.h>
+#include <cppconn/driver.h>
+#include <cppconn/connection.h>
+#include <cppconn/statement.h>
+#include <cppconn/resultset.h>
+#include <cppconn/exception.h>  
+#include <cppconn/resultset_metadata.h>
+
 #include "model/book.h"
 
 using namespace std;
@@ -71,5 +79,7 @@ public:
     void bubble_sort_asc(T *arr,int len);
 
     void bubble_sort_asc_uint64(int len);
+
+    void mysql_retrieve_data();
 };
 #endif

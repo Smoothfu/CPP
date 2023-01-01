@@ -1,5 +1,42 @@
 #include "model/util.h"
 
+void util::mysql_retrieve_data()
+{
+    try
+    {
+        sql::Driver *driver;
+        sql::Connection *conn;
+        sql::ResultSet *res;
+        sql::Statement *stmt; 
+        sql::ResultSetMetaData *resmetadata;
+        
+        driver=get_driver_instance();
+        conn=driver->connect("tcp://127.0.0.1:3306","username","password"); 
+        conn->setSchema("db");
+        stmt=conn->createStatement();
+        res=stmt->executeQuery("select * from Book");
+        resmetadata=res->getMetaData();
+        unsigned int columnscount=resmetadata->getColumnCount();
+        while(res->next())
+        {
+            for(int i=1;i<=columnscount;i++)
+            {
+                cout<<resmetadata->getColumnName(i).asStdString()<<":"<<res->getString(i)<<",";
+            }
+            cout<<endl<<endl;
+        } 
+        delete res;
+        delete stmt;
+        delete conn; 
+    }
+    catch(const sql::SQLException &e)
+    {
+        std::cerr << e.what() << '\n';
+        cout<<e.getErrorCode()<<"\n"<<e.getSQLState()<<"\n";
+    }
+    
+}
+
 void util::bubble_sort_asc_uint64(int len)
 {
     uint64_t *arr=new uint64_t[len];

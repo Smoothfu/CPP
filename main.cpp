@@ -93,12 +93,20 @@ void pass_func_demo(int x,int y)
     cout<<"The prod of "<<x<<" and "<<y<<" is "<<pass_func(x,y,&prod)<<endl;
 }
 
+void retrieve_data_from_mysql()
+{
+    util ul;
+    ul.mysql_retrieve_data();
+}
+
+//g++ -g -std=c++2a -I. *.cpp ./model/*.cpp -o h1 -luuid -lpthread -ljsoncpp -lmysqlcppconn
 int main(int args,char **argv)
 { 
     // t_array_demo(0,UINT32_MAX,atoi(argv[1]));
     // quick_sort_demo(atoi(argv[1]));
     // bubble_sort_asc_demo(atoi(argv[1]));
-    pass_func_demo(atoi(argv[1]),atoi(argv[2]));
+    // pass_func_demo(atoi(argv[1]),atoi(argv[2]));
+    retrieve_data_from_mysql();
 }
 
 

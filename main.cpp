@@ -72,11 +72,33 @@ void bubble_sort_asc_demo(int len)
     ul.bubble_sort_asc_uint64(len);
 }
 
+int sum(int x,int y)
+{
+    return x+y;
+}
+
+int prod(int x,int y)
+{
+    return x*y;
+}
+
+int pass_func(int x,int y,int(*func)(int,int))
+{
+    return func(x,y);
+}
+
+void pass_func_demo(int x,int y)
+{
+    cout<<"The sum of "<<x<<" and "<<y<<" is "<<pass_func(x,y,&sum)<<endl;
+    cout<<"The prod of "<<x<<" and "<<y<<" is "<<pass_func(x,y,&prod)<<endl;
+}
+
 int main(int args,char **argv)
 { 
     // t_array_demo(0,UINT32_MAX,atoi(argv[1]));
     // quick_sort_demo(atoi(argv[1]));
-    bubble_sort_asc_demo(atoi(argv[1]));
+    // bubble_sort_asc_demo(atoi(argv[1]));
+    pass_func_demo(atoi(argv[1]),atoi(argv[2]));
 }
 
 

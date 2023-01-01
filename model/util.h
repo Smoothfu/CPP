@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <random>
 #include <sstream>
 #include <string.h>
 #include <thread>
@@ -37,5 +38,22 @@ public:
     int pass_func_as_argu(int x,int y,int(*func)(int,int));
     void invoke_func_argv(int x,int y);
     void multi_thread(int x,int y,int z,string str);
+    
+    template<typename T>
+    T get_random(T min,T max);
+
+    // template<typename T>
+    void print_random(int len);
+
+    template<typename T>
+    void fill_t_array(T *arr,T min,T max,int len);
+
+    template<typename T>
+    void print_t_array(T *arr,int len);
+
+    template<typename T>
+    void t_array_gen_print(T min,T max,int len);
+
+    void t_array_demo(uint32_t min,uint32_t max,int len);
 };
 #endif

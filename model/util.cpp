@@ -1,9 +1,61 @@
 #include "model/util.h"
 
-void util::multi_thread(int x,int y,int z,string str)
+void util::t_array_demo(uint32_t min,uint32_t max,int len)
+{ 
+    t_array_gen_print<uint32_t>(min,max,len);
+}
+
+template <typename T>
+void util::t_array_gen_print(T min, T max, int len)
 {
-    thread t1([](int xx,int yy,int zz,string sstr)
+    T *arr=new T[len];
+    fill_t_array(arr,min,max,len);
+    print_t_array(arr,len);
+    delete[] arr;
+    cout<<get_time()<<",finished in "<<__FUNCTION__<<","<<__LINE__<<endl;
+}
+
+template <typename T>
+void util::print_t_array(T *arr, int len)
+{
+    for (int i = 0; i < len; i++)
     {
+        cout << "index=" << i << ",value=" << arr[i] << endl;
+    }
+}
+
+template <typename T>
+void util::fill_t_array(T *arr, T min, T max, int len)
+{
+    for (int i = 0; i < len; i++)
+    {
+        arr[i] = get_random<T>(min, max);
+    }
+}
+
+// template <typename T>
+void util::print_random(int len)
+{
+    for (int i = 0; i < len; i++)
+    {
+        cout << i + 1 << "," << get_random<uint64_t>(0, UINT64_MAX) << endl;
+    }
+    cout << get_time() << ",finished in " << __FUNCTION__ << "," << __LINE__ << endl;
+}
+
+template <typename T>
+T util::get_random(T min, T max)
+{
+    random_device rd;
+    mt19937_64 mt{rd()};
+    uniform_int_distribution<T> uid(min, max);
+    return uid(mt);
+}
+
+void util::multi_thread(int x, int y, int z, string str)
+{
+    thread t1([](int xx, int yy, int zz, string sstr)
+              {
         util ul;
         for(int i=0;i<xx;i++)
         {
@@ -22,17 +74,17 @@ void util::multi_thread(int x,int y,int z,string str)
             cout<<i+1<<","<<ul.get_uuid()<<endl;
             sleep(1);
         }
-        cout<<"The string is "<<endl<<sstr<<endl;
-    },x,y,z,str);
+        cout<<"The string is "<<endl<<sstr<<endl; },
+              x, y, z, str);
     t1.join();
-    cout<<get_time()<<",finished in "<<__FUNCTION__<<","<<__LINE__<<endl;
+    cout << get_time() << ",finished in " << __FUNCTION__ << "," << __LINE__ << endl;
 }
 
-void util::invoke_func_argv(int x,int y)
+void util::invoke_func_argv(int x, int y)
 {
-    cout<<"The sum of "<<x<<" and "<<y<<" is "<<pass_func_as_argu(x,y,&sum)<<endl;
-    cout<<"The prod of "<<x<<" and "<<y<<" is "<<pass_func_as_argu(x,y,&prod)<<endl;
-    cout<<get_time()<<",finished in "<<__FUNCTION__<<","<<__LINE__<<endl;
+    cout << "The sum of " << x << " and " << y << " is " << pass_func_as_argu(x, y, &sum) << endl;
+    cout << "The prod of " << x << " and " << y << " is " << pass_func_as_argu(x, y, &prod) << endl;
+    cout << get_time() << ",finished in " << __FUNCTION__ << "," << __LINE__ << endl;
 }
 
 int util::sum(int x, int y)
@@ -225,7 +277,7 @@ string util::get_uuid()
 
 void util::time_demo()
 {
-    static uint64_t num=0;
+    static uint64_t num = 0;
     chrono::time_point<chrono::high_resolution_clock> now = chrono::high_resolution_clock::now();
     // cout << "nanos " << chrono::duration_cast<chrono::nanoseconds>(now.time_since_epoch()).count()
     //      << ",micros " << chrono::duration_cast<chrono::microseconds>(now.time_since_epoch()).count()
@@ -240,7 +292,7 @@ void util::time_demo()
     ss << std::put_time(&tmInfo, "%Y%m%d%H%M%S") << std::setfill('0') << std::setw(3) << millsValue;
     string dtvalue = ss.str();
     ss = stringstream(std::string());
-    cout<<++num<<","<< dtvalue << endl;
+    cout << ++num << "," << dtvalue << endl;
 }
 
 string util::get_time()

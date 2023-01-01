@@ -48,9 +48,21 @@ void multi_thread_demo(int x,int y,int z,string str)
     ul.multi_thread(x,y,z,str);
 }
 
+void print_random_demo(int len)
+{
+    util ul;
+    ul.print_random(len);
+}
+
+void t_array_demo(uint32_t min,uint32_t max,int len)
+{
+    util ul;
+    ul.t_array_demo(min,max,len);
+}
+
 int main(int args,char **argv)
 { 
-    serialize_book_vector_demo(atoi(argv[1])); 
+    t_array_demo(0,UINT32_MAX,atoi(argv[1]));
 }
 
 

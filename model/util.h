@@ -55,5 +55,16 @@ public:
     void t_array_gen_print(T min,T max,int len);
 
     void t_array_demo(uint32_t min,uint32_t max,int len);
+
+    template<typename T>
+    void swap(T *left,T *right);
+
+    template<typename T>
+    int partition_t_array_asc(T *arr,int low,int high);
+
+    template<typename T>
+    void quick_sort_asc(T *arr,int low,int high);
+
+    void quick_sort_asc_uint32(int len);
 };
 #endif

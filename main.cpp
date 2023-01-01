@@ -60,9 +60,16 @@ void t_array_demo(uint32_t min,uint32_t max,int len)
     ul.t_array_demo(min,max,len);
 }
 
+void quick_sort_demo(int len)
+{
+    util ul;
+    ul.quick_sort_asc_uint32(len);
+}
+
 int main(int args,char **argv)
 { 
-    t_array_demo(0,UINT32_MAX,atoi(argv[1]));
+    // t_array_demo(0,UINT32_MAX,atoi(argv[1]));
+    quick_sort_demo(atoi(argv[1]));
 }
 
 

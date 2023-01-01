@@ -1,18 +1,67 @@
 #include "model/util.h"
 
-void util::t_array_demo(uint32_t min,uint32_t max,int len)
-{ 
-    t_array_gen_print<uint32_t>(min,max,len);
+void util::quick_sort_asc_uint32(int len)
+{
+    uint32_t *arr=new uint32_t[len];
+    fill_t_array<uint32_t>(arr,0,UINT32_MAX,len);
+    cout<<"Before quick sort:"<<endl;
+    print_t_array<uint32_t>(arr,len);
+    cout<<endl<<"After quick sort:"<<endl;
+    quick_sort_asc(arr,0,len-1);
+    print_t_array<uint32_t>(arr,len);
+    delete []arr;
+    cout<<get_time()<<",finished in "<<__FUNCTION__<<","<<__LINE__<<endl;
+}
+
+template <typename T>
+void util::quick_sort_asc(T *arr, int low, int high)
+{
+    if (low < high)
+    {
+        int pivot = partition_t_array_asc(arr, low, high);
+        quick_sort_asc(arr, low, pivot - 1);
+        quick_sort_asc(arr, pivot + 1, high);
+    }
+}
+
+template <typename T>
+int util::partition_t_array_asc(T *arr, int low, int high)
+{
+    T pivot = arr[high];
+    int i = low - 1;
+    for (int j = low; j <= high; j++)
+    {
+        if (arr[j] < pivot)
+        {
+            i = i + 1;
+            swap<T>(&arr[i], &arr[j]);
+        }
+    }
+    swap<T>(&arr[i + 1], &arr[high]);
+    return i + 1;
+}
+
+template <typename T>
+void util::swap(T *left, T *right)
+{
+    T temp = *left;
+    *left = *right;
+    *right = temp;
+}
+
+void util::t_array_demo(uint32_t min, uint32_t max, int len)
+{
+    t_array_gen_print<uint32_t>(min, max, len);
 }
 
 template <typename T>
 void util::t_array_gen_print(T min, T max, int len)
 {
-    T *arr=new T[len];
-    fill_t_array(arr,min,max,len);
-    print_t_array(arr,len);
+    T *arr = new T[len];
+    fill_t_array(arr, min, max, len);
+    print_t_array(arr, len);
     delete[] arr;
-    cout<<get_time()<<",finished in "<<__FUNCTION__<<","<<__LINE__<<endl;
+    cout << get_time() << ",finished in " << __FUNCTION__ << "," << __LINE__ << endl;
 }
 
 template <typename T>
@@ -20,8 +69,10 @@ void util::print_t_array(T *arr, int len)
 {
     for (int i = 0; i < len; i++)
     {
-        cout << "index=" << i << ",value=" << arr[i] << endl;
+        cout << arr[i] << "\t";
     }
+    cout << endl
+         << endl;
 }
 
 template <typename T>

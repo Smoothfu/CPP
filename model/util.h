@@ -66,5 +66,10 @@ public:
     void quick_sort_asc(T *arr,int low,int high);
 
     void quick_sort_asc_uint32(int len);
+
+    template<typename T>
+    void bubble_sort_asc(T *arr,int len);
+
+    void bubble_sort_asc_uint64(int len);
 };
 #endif

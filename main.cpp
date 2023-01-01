@@ -66,10 +66,17 @@ void quick_sort_demo(int len)
     ul.quick_sort_asc_uint32(len);
 }
 
+void bubble_sort_asc_demo(int len)
+{
+    util ul;
+    ul.bubble_sort_asc_uint64(len);
+}
+
 int main(int args,char **argv)
 { 
     // t_array_demo(0,UINT32_MAX,atoi(argv[1]));
-    quick_sort_demo(atoi(argv[1]));
+    // quick_sort_demo(atoi(argv[1]));
+    bubble_sort_asc_demo(atoi(argv[1]));
 }
 
 

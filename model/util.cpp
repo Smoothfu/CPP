@@ -1,16 +1,44 @@
 #include "model/util.h"
 
+void util::bubble_sort_asc_uint64(int len)
+{
+    uint64_t *arr=new uint64_t[len];
+    fill_t_array<uint64_t>(arr,0,UINT64_MAX,len);
+    print_t_array<uint64_t>(arr,len);
+    cout<<"\n\n"<<"After bubble sort:"<<endl;
+    bubble_sort_asc<uint64_t>(arr,len);
+    print_t_array<uint64_t>(arr,len);
+    delete[] arr;
+    cout<<get_time()<<",finished in "<<__FUNCTION__<<","<<__LINE__<<endl;
+}
+
+template <typename T>
+void util::bubble_sort_asc(T *arr, int len)
+{
+    for(int i=0;i<len;i++)
+    {
+        for(int j=i+1;j<len;j++)
+        {
+            if(arr[i]>arr[j])
+            {
+                swap(&arr[i],&arr[j]);
+            }
+        }
+    }
+}
+
 void util::quick_sort_asc_uint32(int len)
 {
-    uint32_t *arr=new uint32_t[len];
-    fill_t_array<uint32_t>(arr,0,UINT32_MAX,len);
-    cout<<"Before quick sort:"<<endl;
-    print_t_array<uint32_t>(arr,len);
-    cout<<endl<<"After quick sort:"<<endl;
-    quick_sort_asc(arr,0,len-1);
-    print_t_array<uint32_t>(arr,len);
-    delete []arr;
-    cout<<get_time()<<",finished in "<<__FUNCTION__<<","<<__LINE__<<endl;
+    uint32_t *arr = new uint32_t[len];
+    fill_t_array<uint32_t>(arr, 0, UINT32_MAX, len);
+    cout << "Before quick sort:" << endl;
+    print_t_array<uint32_t>(arr, len);
+    cout << endl
+         << "After quick sort:" << endl;
+    quick_sort_asc(arr, 0, len - 1);
+    print_t_array<uint32_t>(arr, len);
+    delete[] arr;
+    cout << get_time() << ",finished in " << __FUNCTION__ << "," << __LINE__ << endl;
 }
 
 template <typename T>

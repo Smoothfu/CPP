@@ -1,31 +1,107 @@
 #include "model/util.h"
 
+void util::insert_into_mysql_table(int len)
+{
+    try
+    {
+        sql::Driver *driver;
+        sql::Connection *conn;
+        sql::Statement *stmt;
+
+        driver = get_driver_instance();
+        conn = driver->connect("tcp://127.0.0.1:3306", "fred", "Fred0001!");
+        conn->setSchema("db");
+        stmt = conn->createStatement(); 
+        int loops = len / 100000;
+        int remainder = len % 100000;
+        stringstream ss;
+        string presql = "insert into b1(id,author,comment,content,name,title,topic) values ";
+        uint64_t num = 1;
+        if (loops > 0)
+        {
+            for (int loop = 0; loop < loops; loop++)
+            { 
+                ss = stringstream();
+                ss << "insert into b1(id,author,comment,content,name,title,topic) values ";
+                for (int i = 0; i < 100000; i++)
+                {
+                    ss << "('" << static_cast<uint64_t>(num * num++) << "','"
+                       << get_uuid() << "','" << get_uuid() << "','" << get_uuid() << "','"
+                       << get_uuid() << "','" << get_uuid() << "','" << get_uuid() << "'),"; 
+                }
+
+                string insertsql = ss.str(); 
+                size_t lastcomma = insertsql.find_last_of(",");
+
+                if (lastcomma != string::npos)
+                {
+                    insertsql = insertsql.substr(0, lastcomma);
+                    log_file_msg(get_time().append(".txt"),insertsql);
+                    bool inserted = stmt->execute(insertsql);
+                    cout << "inserted =" << inserted << ",num =" << num << endl;
+                }
+            }
+        }
+
+        if (remainder > 0)
+        {
+            ss = stringstream();
+            ss << presql;
+            num = loops * 100000;
+            for (int i = 0; i < remainder; i++)
+            {
+                ss << "(" << static_cast<uint64_t>(num * num++) << ",'" << get_uuid() << "','" << get_uuid() << "','" << get_uuid() << "','"
+                   << get_uuid() << "','" << get_uuid() << "','" << get_uuid() << "'),";
+            }
+
+            string insertsql = ss.str();
+            size_t lastcomma = insertsql.find_last_of(",");
+            if (lastcomma != string::npos)
+            {
+                insertsql = insertsql.substr(0, lastcomma);
+                log_file_msg(get_time().append(".txt"),insertsql);
+                bool inserted = stmt->execute(insertsql);
+                cout << "inserted =" << inserted << ",num =" << num << endl;
+                ss = stringstream();
+            }
+        }
+        cout << get_time() << ",finished in " << __FUNCTION__ << "," << __LINE__ << endl;
+    }
+    catch (const sql::SQLException &e)
+    {
+        std::cerr << e.what() << '\n';
+        cout << e.getErrorCode() << "," << e.getSQLState() << endl;
+    }
+}
+
 void util::book_vector_populate_print(int len)
 {
     vector<book> vec;
-    populate_vector_book(std::ref(vec),len);
+    populate_vector_book(std::ref(vec), len);
     print_book_vector(std::ref(vec));
-    cout<<endl<<get_time()<<",finished in "<<__FUNCTION__<<","<<__LINE__<<endl;
+    cout << endl
+         << get_time() << ",finished in " << __FUNCTION__ << "," << __LINE__ << endl;
 }
 
 void util::print_vector_book(vector<book> &vec)
 {
-    vector<book>::iterator itr=vec.begin();
-    while(itr!=vec.end())
+    vector<book>::iterator itr = vec.begin();
+    while (itr != vec.end())
     {
-        cout<<fixed<<itr->idx<<","<<itr->id<<","<<itr->abstract<<","<<itr->author<<","<<itr->comment
-        <<","<<itr->content<<","<<itr->isbn<<","<<itr->summary<<","<<itr->title<<","<<itr->topic<<endl;
+        cout << fixed << itr->idx << "," << itr->id << "," << itr->abstract << "," << itr->author << "," << itr->comment
+             << "," << itr->content << "," << itr->isbn << "," << itr->summary << "," << itr->title << "," << itr->topic << endl;
     }
-    cout<<endl<<get_time()<<",finished in "<<__FUNCTION__<<","<<__LINE__<<endl;
+    cout << endl
+         << get_time() << ",finished in " << __FUNCTION__ << "," << __LINE__ << endl;
 }
 
-void util::populate_vector_book(vector<book>&vec,int len)
+void util::populate_vector_book(vector<book> &vec, int len)
 {
-    for(int i=0;i<len;i++)
+    for (int i = 0; i < len; i++)
     {
         book bk;
-        bk.idx=static_cast<uint64_t>(i);
-        bk.id=static_cast<uint64_t>(i*i*i*i*i);
+        bk.idx = static_cast<uint64_t>(i);
+        bk.id = static_cast<uint64_t>(i * i * i * i * i);
         bk.abstract.assign(get_uuid());
         bk.author.assign(get_uuid());
         bk.comment.assign(get_uuid());
@@ -33,7 +109,7 @@ void util::populate_vector_book(vector<book>&vec,int len)
         bk.isbn.assign(get_uuid());
         bk.summary.assign(get_uuid());
         bk.title.assign(get_uuid());
-        bk.topic.assign(get_uuid()); 
+        bk.topic.assign(get_uuid());
         vec.push_back(bk);
     }
 }

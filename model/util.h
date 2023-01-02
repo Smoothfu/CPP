@@ -89,5 +89,7 @@ public:
     void print_vector_book(vector<book> &vec);
 
     void book_vector_populate_print(int len);
+
+    void insert_into_mysql_table(int len);
 };
 #endif

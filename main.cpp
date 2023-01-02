@@ -111,10 +111,17 @@ void populate_print_vector_book(int len)
     ul.book_vector_populate_print(len);
 }
 
+void mysql_insertinto_table_demo(int len)
+{
+    util ul;
+    ul.insert_into_mysql_table(len);
+}
+
 //g++ -g -std=c++2a -I. *.cpp ./model/*.cpp -o h1 -luuid -lpthread -lmysqlcppconn -ljsoncpp
 int main(int args,char **argv)
 {  
     // mt_le_demo(atoi(argv[1]),atoi(argv[2]),atoi(argv[3]),argv[4]);
-    populate_print_vector_book(atoi(argv[1]));
+    // populate_print_vector_book(atoi(argv[1]));
+    mysql_insertinto_table_demo(atoi(argv[1]));
 }
 

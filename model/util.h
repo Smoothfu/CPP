@@ -79,7 +79,15 @@ public:
     void bubble_sort_asc(T *arr,int len);
 
     void bubble_sort_asc_uint64(int len); 
-    
+
     void mysql_retrieve_data(); 
+
+    void mt_le(int x,int y,int z,string str);
+
+    void populate_vector_book(vector<book>&vec,int len);
+
+    void print_vector_book(vector<book> &vec);
+
+    void book_vector_populate_print(int len);
 };
 #endif

@@ -93,9 +93,28 @@ void pass_func_demo(int x,int y)
     cout<<"The prod of "<<x<<" and "<<y<<" is "<<pass_func(x,y,&prod)<<endl;
 }
 
+void mysql_retrieve_data_demo()
+{
+    util ul;
+    ul.mysql_retrieve_data();
+}
+
+void mt_le_demo(int x,int y,int z,string str)
+{
+    util ul;
+    ul.mt_le(x,y,z,str);
+}
+
+void populate_print_vector_book(int len)
+{
+    util ul;
+    ul.book_vector_populate_print(len);
+}
+
 //g++ -g -std=c++2a -I. *.cpp ./model/*.cpp -o h1 -luuid -lpthread -lmysqlcppconn -ljsoncpp
 int main(int args,char **argv)
 {  
-    serialize_book_vector_demo(100000);
+    // mt_le_demo(atoi(argv[1]),atoi(argv[2]),atoi(argv[3]),argv[4]);
+    populate_print_vector_book(atoi(argv[1]));
 }
 

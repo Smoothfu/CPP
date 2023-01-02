@@ -1,5 +1,72 @@
 #include "model/util.h"
- 
+
+void util::book_vector_populate_print(int len)
+{
+    vector<book> vec;
+    populate_vector_book(std::ref(vec),len);
+    print_book_vector(std::ref(vec));
+    cout<<endl<<get_time()<<",finished in "<<__FUNCTION__<<","<<__LINE__<<endl;
+}
+
+void util::print_vector_book(vector<book> &vec)
+{
+    vector<book>::iterator itr=vec.begin();
+    while(itr!=vec.end())
+    {
+        cout<<fixed<<itr->idx<<","<<itr->id<<","<<itr->abstract<<","<<itr->author<<","<<itr->comment
+        <<","<<itr->content<<","<<itr->isbn<<","<<itr->summary<<","<<itr->title<<","<<itr->topic<<endl;
+    }
+    cout<<endl<<get_time()<<",finished in "<<__FUNCTION__<<","<<__LINE__<<endl;
+}
+
+void util::populate_vector_book(vector<book>&vec,int len)
+{
+    for(int i=0;i<len;i++)
+    {
+        book bk;
+        bk.idx=static_cast<uint64_t>(i);
+        bk.id=static_cast<uint64_t>(i*i*i*i*i);
+        bk.abstract.assign(get_uuid());
+        bk.author.assign(get_uuid());
+        bk.comment.assign(get_uuid());
+        bk.content.assign(get_uuid());
+        bk.isbn.assign(get_uuid());
+        bk.summary.assign(get_uuid());
+        bk.title.assign(get_uuid());
+        bk.topic.assign(get_uuid()); 
+        vec.push_back(bk);
+    }
+}
+
+void util::mt_le(int x, int y, int z, string str)
+{
+    thread t1([](int xx, int yy, int zz, string sstr)
+              {
+        util ul;
+        for(int i=0;i<xx;i++)
+        {
+            cout<<ul.get_time()<<","<<i<<","<<ul.get_uuid()<<endl;
+            usleep(10000);
+        }
+
+        for(int i=0;i<yy;i++)
+        {
+            cout<<ul.get_uuid()<<","<<i<<","<<ul.get_time()<<endl;
+            sleep(1);
+        }
+
+        for(int i=0;i<zz;i++)
+        {
+            cout<<i+1<<","<<ul.get_uuid()<<endl;
+            sleep(1);
+        }
+        
+        cout<<"The string is "<<endl<<endl<<sstr<<endl; },
+              x, y, z, str);
+    t1.join();
+    cout << get_time() << ",finished in " << __FUNCTION__ << "," << __LINE__ << endl;
+}
+
 void util::mysql_retrieve_data()
 {
     try
@@ -7,58 +74,60 @@ void util::mysql_retrieve_data()
         sql::Driver *driver;
         sql::Connection *conn;
         sql::ResultSet *res;
-        sql::Statement *stmt; 
+        sql::Statement *stmt;
         sql::ResultSetMetaData *resmetadata;
-        
-        driver=get_driver_instance();
-        conn=driver->connect("tcp://127.0.0.1:3306","username","password"); 
+
+        driver = get_driver_instance();
+        conn = driver->connect("tcp://127.0.0.1:3306", "username", "password");
         conn->setSchema("db");
-        stmt=conn->createStatement();
-        res=stmt->executeQuery("select * from Book");
-        resmetadata=res->getMetaData();
-        unsigned int columnscount=resmetadata->getColumnCount();
-        while(res->next())
+        stmt = conn->createStatement();
+        res = stmt->executeQuery("select * from Book");
+        resmetadata = res->getMetaData();
+        unsigned int columnscount = resmetadata->getColumnCount();
+        while (res->next())
         {
-            for(int i=1;i<=columnscount;i++)
+            for (int i = 1; i <= columnscount; i++)
             {
-                cout<<resmetadata->getColumnName(i).asStdString()<<":"<<res->getString(i)<<",";
+                cout << resmetadata->getColumnName(i).asStdString() << ":" << res->getString(i) << ",";
             }
-            cout<<endl<<endl;
-        } 
+            cout << endl
+                 << endl;
+        }
         delete res;
         delete stmt;
-        delete conn; 
+        delete conn;
     }
-    catch(const sql::SQLException &e)
+    catch (const sql::SQLException &e)
     {
         std::cerr << e.what() << '\n';
-        cout<<e.getErrorCode()<<"\n"<<e.getSQLState()<<"\n";
+        cout << e.getErrorCode() << "\n"
+             << e.getSQLState() << "\n";
     }
-    
-} 
+}
 
 void util::bubble_sort_asc_uint64(int len)
 {
-    uint64_t *arr=new uint64_t[len];
-    fill_t_array<uint64_t>(arr,0,UINT64_MAX,len);
-    print_t_array<uint64_t>(arr,len);
-    cout<<"\n\n"<<"After bubble sort:"<<endl;
-    bubble_sort_asc<uint64_t>(arr,len);
-    print_t_array<uint64_t>(arr,len);
+    uint64_t *arr = new uint64_t[len];
+    fill_t_array<uint64_t>(arr, 0, UINT64_MAX, len);
+    print_t_array<uint64_t>(arr, len);
+    cout << "\n\n"
+         << "After bubble sort:" << endl;
+    bubble_sort_asc<uint64_t>(arr, len);
+    print_t_array<uint64_t>(arr, len);
     delete[] arr;
-    cout<<get_time()<<",finished in "<<__FUNCTION__<<","<<__LINE__<<endl;
+    cout << get_time() << ",finished in " << __FUNCTION__ << "," << __LINE__ << endl;
 }
 
 template <typename T>
 void util::bubble_sort_asc(T *arr, int len)
 {
-    for(int i=0;i<len;i++)
+    for (int i = 0; i < len; i++)
     {
-        for(int j=i+1;j<len;j++)
+        for (int j = i + 1; j < len; j++)
         {
-            if(arr[i]>arr[j])
+            if (arr[i] > arr[j])
             {
-                swap(&arr[i],&arr[j]);
+                swap(&arr[i], &arr[j]);
             }
         }
     }

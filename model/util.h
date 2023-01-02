@@ -79,7 +79,10 @@ public:
     void bubble_sort_asc(T *arr,int len);
 
     void bubble_sort_asc_uint64(int len);
+<<<<<<< HEAD
 
     void mysql_retrieve_data();
+=======
+>>>>>>> 4cc6994 (bubble sort ascendingly)
 };
 #endif

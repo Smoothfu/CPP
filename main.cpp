@@ -102,5 +102,6 @@ void retrieve_data_from_mysql()
 // g++ -g -std=c++2a -I. *.cpp ./model/*.cpp -o h1 -luuid -lpthread -ljsoncpp -lmysqlcppconn
 int main(int args, char **argv)
 {
-    serialize_book_vector_demo(atoi(argv[1]));
+    // serialize_book_vector_demo(atoi(argv[1]));
+    retrieve_data_from_mysql();
 }

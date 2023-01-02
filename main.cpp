@@ -69,49 +69,33 @@ void quick_sort_demo(int len)
 void bubble_sort_asc_demo(int len)
 {
     util ul;
-    ul.bubble_sort_asc_uint64(len);
-<<<<<<< HEAD
-=======
+    ul.bubble_sort_asc_uint64(len); 
 }
 
+int sum(int x,int y)
+{
+    return x+y;
+}
+
+int prod(int x,int y)
+{
+    return x*y;
+}
+
+int pass_func(int x,int y,int(*func)(int,int))
+{
+    return func(x,y);
+}
+
+void pass_func_demo(int x,int y)
+{
+    cout<<"The sum of "<<x<<" and "<<y<<" is "<<pass_func(x,y,&sum)<<endl;
+    cout<<"The prod of "<<x<<" and "<<y<<" is "<<pass_func(x,y,&prod)<<endl;
+}
+
+//g++ -g -std=c++2a -I. *.cpp ./model/*.cpp -o h1 -luuid -lpthread -lmysqlcppconn -ljsoncpp
 int main(int args,char **argv)
-{ 
-    // t_array_demo(0,UINT32_MAX,atoi(argv[1]));
-    // quick_sort_demo(atoi(argv[1]));
-    bubble_sort_asc_demo(atoi(argv[1]));
->>>>>>> 4cc6994 (bubble sort ascendingly)
+{  
+    serialize_book_vector_demo(100000);
 }
 
-int sum(int x, int y)
-{
-    return x + y;
-}
-
-int prod(int x, int y)
-{
-    return x * y;
-}
-
-int pass_func(int x, int y, int (*func)(int, int))
-{
-    return func(x, y);
-}
-
-void pass_func_demo(int x, int y)
-{
-    cout << "The sum of " << x << " and " << y << " is " << pass_func(x, y, &sum) << endl;
-    cout << "The prod of " << x << " and " << y << " is " << pass_func(x, y, &prod) << endl;
-}
-
-void retrieve_data_from_mysql()
-{
-    util ul;
-    ul.mysql_retrieve_data();
-}
-
-// g++ -g -std=c++2a -I. *.cpp ./model/*.cpp -o h1 -luuid -lpthread -ljsoncpp -lmysqlcppconn
-int main(int args, char **argv)
-{
-    // serialize_book_vector_demo(atoi(argv[1]));
-    retrieve_data_from_mysql();
-}

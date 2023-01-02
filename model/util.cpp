@@ -9,7 +9,7 @@ void util::insert_into_mysql_table(int len)
         sql::Statement *stmt;
 
         driver = get_driver_instance();
-        conn = driver->connect("tcp://127.0.0.1:3306", "fred", "Fred0001!");
+        conn = driver->connect("tcp://127.0.0.1:3306", "username", "password");
         conn->setSchema("db");
         stmt = conn->createStatement(); 
         int loops = len / 100000;

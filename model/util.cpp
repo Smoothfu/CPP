@@ -1,6 +1,5 @@
 #include "model/util.h"
-
-<<<<<<< HEAD
+ 
 void util::mysql_retrieve_data()
 {
     try
@@ -36,10 +35,8 @@ void util::mysql_retrieve_data()
         cout<<e.getErrorCode()<<"\n"<<e.getSQLState()<<"\n";
     }
     
-}
+} 
 
-=======
->>>>>>> 4cc6994 (bubble sort ascendingly)
 void util::bubble_sort_asc_uint64(int len)
 {
     uint64_t *arr=new uint64_t[len];

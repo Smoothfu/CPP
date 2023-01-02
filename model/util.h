@@ -78,11 +78,8 @@ public:
     template<typename T>
     void bubble_sort_asc(T *arr,int len);
 
-    void bubble_sort_asc_uint64(int len);
-<<<<<<< HEAD
-
-    void mysql_retrieve_data();
-=======
->>>>>>> 4cc6994 (bubble sort ascendingly)
+    void bubble_sort_asc_uint64(int len); 
+    
+    void mysql_retrieve_data(); 
 };
 #endif
